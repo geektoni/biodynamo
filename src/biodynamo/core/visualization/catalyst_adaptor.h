@@ -569,7 +569,7 @@ class CatalystAdaptor {
     auto* sim = TSimulation::GetActive();
     std::stringstream python_cmd;
     python_cmd << "pvpython "
-               << BDM_SRC_DIR "/visualization/generate_pv_state.py "
+               << BDM_SRC_DIR "/biodynamo/core/visualization/generate_pv_state.py "
                << sim->GetOutputDir() << "/" << kSimulationInfoJson;
     int ret_code = system(python_cmd.str().c_str());
     if (ret_code) {
