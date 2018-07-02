@@ -12,11 +12,11 @@
 //
 // -----------------------------------------------------------------------------
 
-#include "biology_module/grow_divide.h"
+#include "biodynamo/core/simulation/biology_module/grow_divide.h"
 #include <typeinfo>
 #include "gtest/gtest.h"
-#include "resource_manager.h"
-#include "simulation_implementation.h"
+#include "biodynamo/core/simulation/resource_manager.h"
+#include "biodynamo/core/simulation_implementation.h"
 #include "unit/default_ctparam.h"
 #include "unit/test_util.h"
 

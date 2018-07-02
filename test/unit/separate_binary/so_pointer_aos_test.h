@@ -17,11 +17,11 @@
 
 #include <gtest/gtest.h>
 
-#include "compile_time_param.h"
-#include "simulation_backup.h"
-#include "simulation_implementation.h"
-#include "simulation_object.h"
-#include "so_pointer.h"
+#include "biodynamo/core/simulation/compile_time_param.h"
+#include "biodynamo/core/simulation_backup.h"
+#include "biodynamo/core/simulation_implementation.h"
+#include "biodynamo/core/simulation_object.h"
+#include "biodynamo/core/simulation/so_pointer.h"
 #include "unit/io_test.h"
 
 namespace bdm {

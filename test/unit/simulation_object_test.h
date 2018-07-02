@@ -16,9 +16,9 @@
 #define UNIT_SIMULATION_OBJECT_TEST_H_
 
 #include "gtest/gtest.h"
-#include "simulation_implementation.h"
-#include "simulation_object.h"
-#include "simulation_object_util.h"
+#include "biodynamo/core/simulation_implementation.h"
+#include "biodynamo/core/simulation_object.h"
+#include "biodynamo/core/simulation_object_util.h"
 #include "unit/test_util.h"
 
 namespace bdm {

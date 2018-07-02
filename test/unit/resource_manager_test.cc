@@ -14,8 +14,8 @@
 
 // I/O related code must be in header file
 #include "unit/resource_manager_test.h"
-#include "cell.h"
-#include "simulation_implementation.h"
+#include "biodynamo/core/simulation/cell.h"
+#include "biodynamo/core/simulation_implementation.h"
 #include "unit/io_test.h"
 
 namespace bdm {

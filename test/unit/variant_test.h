@@ -17,9 +17,9 @@
 
 #include <vector>
 #include "gtest/gtest.h"
-#include "io_util.h"
+#include "biodynamo/core/util/io_util.h"
 #include "unit/test_util.h"
-#include "variant.h"
+#include "biodynamo/core/variant.h"
 
 #define ROOTFILE "bdmFile.root"
 

@@ -16,7 +16,7 @@
 #define MULTIPLE_SIMULATIONS_H_
 
 #include <vector>
-#include "biodynamo.h"
+#include "biodynamo/core/simulation/biodynamo.h"
 
 namespace bdm {
 

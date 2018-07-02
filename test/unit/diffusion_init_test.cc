@@ -12,13 +12,13 @@
 //
 // -----------------------------------------------------------------------------
 
-#include "cell.h"
-#include "diffusion_grid.h"
-#include "grid.h"
+#include "biodynamo/core/simulation/cell.h"
+#include "biodynamo/core/simulation/diffusion_grid.h"
+#include "biodynamo/core/simulation/grid.h"
 #include "gtest/gtest.h"
-#include "model_initializer.h"
-#include "simulation_implementation.h"
-#include "substance_initializers.h"
+#include "biodynamo/core/simulation/model_initializer.h"
+#include "biodynamo/core/simulation_implementation.h"
+#include "biodynamo/core/simulation/substance_initializers.h"
 #include "unit/default_ctparam.h"
 #include "unit/test_util.h"
 

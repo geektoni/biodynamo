@@ -18,9 +18,9 @@
 #include <vector>
 #include "gtest/gtest.h"
 
-#include "backend.h"
-#include "inline_vector.h"
-#include "io_util.h"
+#include "biodynamo/core/backend.h"
+#include "biodynamo/core/container/inline_vector.h"
+#include "biodynamo/core/util/io_util.h"
 
 #define ROOTFILE "bdmFile.root"
 

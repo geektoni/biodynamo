@@ -14,9 +14,9 @@
 
 #include "gtest/gtest.h"
 
-#include "cell.h"
-#include "compile_time_param.h"
-#include "simulation_implementation.h"
+#include "biodynamo/core/simulation/cell.h"
+#include "biodynamo/core/simulation/compile_time_param.h"
+#include "biodynamo/core/simulation_implementation.h"
 #include "unit/test_util.h"
 
 namespace bdm {

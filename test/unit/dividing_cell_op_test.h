@@ -16,8 +16,8 @@
 #define UNIT_DIVIDING_CELL_OP_TEST_H_
 
 #include <omp.h>
-#include "cell.h"
-#include "dividing_cell_op.h"
+#include "biodynamo/core/simulation/cell.h"
+#include "biodynamo/core/simulation/operation/dividing_cell_op.h"
 #include "gtest/gtest.h"
 #include "unit/test_util.h"
 

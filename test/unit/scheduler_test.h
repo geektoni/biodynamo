@@ -15,15 +15,15 @@
 #ifndef UNIT_SCHEDULER_TEST_H_
 #define UNIT_SCHEDULER_TEST_H_
 
-#include "scheduler.h"
+#include "biodynamo/core/simulation/scheduler.h"
 
 #include <gtest/gtest.h>
 #include <unistd.h>
 #include <string>
 
-#include "cell.h"
-#include "io_util.h"
-#include "simulation_implementation.h"
+#include "biodynamo/core/simulation/cell.h"
+#include "biodynamo/core/util/io_util.h"
+#include "biodynamo/core/simulation_implementation.h"
 #include "unit/default_ctparam.h"
 #include "unit/test_util.h"
 

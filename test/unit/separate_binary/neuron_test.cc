@@ -13,12 +13,12 @@
 // -----------------------------------------------------------------------------
 
 #include "gtest/gtest.h"
-#include "neuroscience/neuron_soma.h"
+#include "biodynamo/neuroscience/neuron_soma.h"
 
-#include "compile_time_param.h"
-#include "displacement_op.h"
-#include "neuroscience/compile_time_param.h"
-#include "simulation_implementation.h"
+#include "biodynamo/core/simulation/compile_time_param.h"
+#include "biodynamo/core/simulation/operation/displacement_op.h"
+#include "biodynamo/neuroscience/compile_time_param.h"
+#include "biodynamo/core/simulation_implementation.h"
 
 #include "unit/test_util.h"
 // FIXME move to neuroscience directory

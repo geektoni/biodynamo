@@ -12,12 +12,12 @@
 //
 // -----------------------------------------------------------------------------
 
-#include "transactional_vector.h"
+#include "biodynamo/core/container/transactional_vector.h"
 #include <thread>
-#include "compile_time_param.h"
+#include "biodynamo/core/simulation/compile_time_param.h"
 #include "gtest/gtest.h"
-#include "simulation_object.h"
-#include "simulation_object_util.h"
+#include "biodynamo/core/simulation_object.h"
+#include "biodynamo/core/simulation_object_util.h"
 
 namespace bdm {
 namespace transactional_vector_test_internal {

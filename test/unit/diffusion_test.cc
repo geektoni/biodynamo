@@ -14,12 +14,12 @@
 
 #include <fstream>
 
-#include "cell.h"
-#include "diffusion_grid.h"
-#include "grid.h"
+#include "biodynamo/core/simulation/cell.h"
+#include "biodynamo/core/simulation/diffusion_grid.h"
+#include "biodynamo/core/simulation/grid.h"
 #include "gtest/gtest.h"
-#include "io_util.h"
-#include "simulation_implementation.h"
+#include "biodynamo/core/util/io_util.h"
+#include "biodynamo/core/simulation_implementation.h"
 #include "unit/default_ctparam.h"
 #include "unit/test_util.h"
 

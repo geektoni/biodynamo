@@ -17,8 +17,8 @@
 
 #include <vector>
 
-#include "biodynamo.h"
-#include "math_util.h"
+#include "biodynamo/core/simulation/biodynamo.h"
+#include "biodynamo/core/util/math_util.h"
 
 namespace bdm {
 

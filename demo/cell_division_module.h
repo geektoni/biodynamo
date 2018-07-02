@@ -15,7 +15,7 @@
 #ifndef DEMO_CELL_DIVISION_MODULE_H_
 #define DEMO_CELL_DIVISION_MODULE_H_
 
-#include "biodynamo.h"
+#include "biodynamo/core/simulation/biodynamo.h"
 
 namespace bdm {
 

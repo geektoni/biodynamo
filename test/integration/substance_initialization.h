@@ -17,8 +17,8 @@
 
 #include <vector>
 
-#include "biodynamo.h"
-#include "substance_initializers.h"
+#include "biodynamo/core/simulation/biodynamo.h"
+#include "biodynamo/core/simulation/substance_initializers.h"
 
 namespace bdm {
 

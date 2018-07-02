@@ -13,7 +13,7 @@
 // -----------------------------------------------------------------------------
 
 #include "unit/simulation_object_test.h"
-#include "cell.h"
+#include "biodynamo/core/simulation/cell.h"
 #include "unit/default_ctparam.h"
 
 namespace bdm {

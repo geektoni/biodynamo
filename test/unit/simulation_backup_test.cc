@@ -12,13 +12,13 @@
 //
 // -----------------------------------------------------------------------------
 
-#include "simulation_backup.h"
+#include "biodynamo/core/simulation_backup.h"
 
 #include <string>
-#include "cell.h"
+#include "biodynamo/core/simulation/cell.h"
 #include "gtest/gtest.h"
-#include "io_util.h"
-#include "simulation_implementation.h"
+#include "biodynamo/core/util/io_util.h"
+#include "biodynamo/core/simulation_implementation.h"
 #include "unit/default_ctparam.h"
 #include "unit/test_util.h"
 

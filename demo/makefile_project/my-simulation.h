@@ -15,7 +15,7 @@
 #ifndef DEMO_MAKEFILE_PROJECT_MY_SIMULATION_H_
 #define DEMO_MAKEFILE_PROJECT_MY_SIMULATION_H_
 
-#include "biodynamo.h"
+#include "biodynamo/core/simulation/biodynamo.h"
 
 namespace bdm {
 

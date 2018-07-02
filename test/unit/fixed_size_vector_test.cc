@@ -12,9 +12,9 @@
 //
 // -----------------------------------------------------------------------------
 
-#include "fixed_size_vector.h"
+#include "biodynamo/core/container/fixed_size_vector.h"
 #include "gtest/gtest.h"
-#include "simulation_implementation.h"
+#include "biodynamo/core/simulation_implementation.h"
 
 namespace bdm {
 

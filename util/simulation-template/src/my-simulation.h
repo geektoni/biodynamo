@@ -14,7 +14,7 @@
 #ifndef MY_SIMULATION_H_
 #define MY_SIMULATION_H_
 
-#include "biodynamo.h"
+#include "biodynamo/core/simulation/biodynamo.h"
 
 namespace bdm {
 

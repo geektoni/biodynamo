@@ -12,10 +12,10 @@
 //
 // -----------------------------------------------------------------------------
 
-#include "type_util.h"
+#include "biodynamo/core/util/type_util.h"
 #include <string>
 #include <typeinfo>
-#include "cell.h"
+#include "biodynamo/core/simulation/cell.h"
 #include "gtest/gtest.h"
 
 namespace bdm {

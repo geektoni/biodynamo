@@ -15,10 +15,10 @@
 #ifndef UNIT_DISPLACEMENT_OP_TEST_H_
 #define UNIT_DISPLACEMENT_OP_TEST_H_
 
-#include "cell.h"
-#include "displacement_op.h"
-#include "grid.h"
-#include "simulation_implementation.h"
+#include "biodynamo/core/simulation/cell.h"
+#include "biodynamo/core/simulation/operation/displacement_op.h"
+#include "biodynamo/core/simulation/grid.h"
+#include "biodynamo/core/simulation_implementation.h"
 #include "unit/test_util.h"
 
 namespace bdm {

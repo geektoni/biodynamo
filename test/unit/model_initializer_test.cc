@@ -12,16 +12,16 @@
 //
 // -----------------------------------------------------------------------------
 
-#include "model_initializer.h"
-#include "backend.h"
-#include "biology_module_util.h"
-#include "cell.h"
+#include "biodynamo/core/simulation/model_initializer.h"
+#include "biodynamo/core/backend.h"
+#include "biodynamo/core/biology_module_util.h"
+#include "biodynamo/core/simulation/cell.h"
 #include "gtest/gtest.h"
-#include "resource_manager.h"
-#include "simulation_implementation.h"
+#include "biodynamo/core/simulation/resource_manager.h"
+#include "biodynamo/core/simulation_implementation.h"
 #include "unit/default_ctparam.h"
 #include "unit/test_util.h"
-#include "variadic_template_parameter_util.h"
+#include "biodynamo/core/util/variadic_template_parameter_util.h"
 
 namespace bdm {
 namespace model_initializer_test_internal {

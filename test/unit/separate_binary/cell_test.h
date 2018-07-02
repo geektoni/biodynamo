@@ -17,10 +17,10 @@
 
 #include <vector>
 
-#include "biology_module_util.h"
-#include "cell.h"
+#include "biodynamo/core/biology_module_util.h"
+#include "biodynamo/core/simulation/cell.h"
 #include "gtest/gtest.h"
-#include "io_util.h"
+#include "biodynamo/core/util/io_util.h"
 #include "unit/test_util.h"
 
 #define ROOTFILE "bdmFile.root"

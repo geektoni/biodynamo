@@ -12,10 +12,10 @@
 //
 // -----------------------------------------------------------------------------
 
-#include "grid.h"
-#include "cell.h"
+#include "biodynamo/core/simulation/grid.h"
+#include "biodynamo/core/simulation/cell.h"
 #include "gtest/gtest.h"
-#include "simulation_implementation.h"
+#include "biodynamo/core/simulation_implementation.h"
 #include "unit/default_ctparam.h"
 #include "unit/test_util.h"
 

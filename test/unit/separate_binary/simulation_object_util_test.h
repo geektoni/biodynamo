@@ -15,7 +15,7 @@
 #ifndef UNIT_SEPARATE_BINARY_SIMULATION_OBJECT_UTIL_TEST_H_
 #define UNIT_SEPARATE_BINARY_SIMULATION_OBJECT_UTIL_TEST_H_
 
-#include "simulation_object_util.h"
+#include "biodynamo/core/simulation_object_util.h"
 
 #include <array>
 #include <vector>
@@ -23,9 +23,9 @@
 #include <Rtypes.h>
 // #include "compile_time_param.h"
 #include "gtest/gtest.h"
-#include "io_util.h"
-#include "simulation_object.h"
-#include "transactional_vector.h"
+#include "biodynamo/core/util/io_util.h"
+#include "biodynamo/core/simulation_object.h"
+#include "biodynamo/core/container/transactional_vector.h"
 
 #define ROOTFILE "bdmFile.root"
 

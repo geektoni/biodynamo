@@ -14,7 +14,7 @@
 
 #include "gtest/gtest.h"
 
-#include "simulation_implementation.h"
+#include "biodynamo/core/simulation_implementation.h"
 #include "unit/separate_binary/simulation_object_util_test.h"
 #include "unit/test_util.h"
 

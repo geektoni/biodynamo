@@ -17,15 +17,15 @@
 
 #include "gtest/gtest.h"
 
-#include "biology_module_util.h"
-#include "cell.h"
-#include "displacement_op.h"
-#include "dividing_cell_op.h"
-#include "inline_vector.h"
-#include "io_util.h"
+#include "biodynamo/core/biology_module_util.h"
+#include "biodynamo/core/simulation/cell.h"
+#include "biodynamo/core/simulation/operation/displacement_op.h"
+#include "biodynamo/core/simulation/operation/dividing_cell_op.h"
+#include "biodynamo/core/container/inline_vector.h"
+#include "biodynamo/core/util/io_util.h"
 #include "unit/default_ctparam.h"
 #include "unit/test_util.h"
-#include "variant.h"
+#include "biodynamo/core/variant.h"
 
 #define ROOTFILE "bdmFile.root"
 

@@ -16,7 +16,7 @@
 #define INTEGRATION_BACKUP_RESTORE_H_
 
 #include <unistd.h>
-#include "biodynamo.h"
+#include "biodynamo/core/simulation/biodynamo.h"
 
 namespace bdm {
 

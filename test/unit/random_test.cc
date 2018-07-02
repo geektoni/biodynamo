@@ -12,9 +12,9 @@
 //
 // -----------------------------------------------------------------------------
 
-#include "random.h"
+#include "biodynamo/core/random.h"
 #include <gtest/gtest.h>
-#include "simulation_implementation.h"
+#include "biodynamo/core/simulation_implementation.h"
 #include "unit/default_ctparam.h"
 #include "unit/io_test.h"
 

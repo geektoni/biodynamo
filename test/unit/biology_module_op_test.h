@@ -15,11 +15,11 @@
 #ifndef UNIT_BIOLOGY_MODULE_OP_TEST_H_
 #define UNIT_BIOLOGY_MODULE_OP_TEST_H_
 
-#include "biology_module_op.h"
-#include "biology_module_util.h"
-#include "cell.h"
-#include "compile_time_param.h"
-#include "transactional_vector.h"
+#include "biodynamo/core/simulation/operation/biology_module_op.h"
+#include "biodynamo/core/biology_module_util.h"
+#include "biodynamo/core/simulation/cell.h"
+#include "biodynamo/core/simulation/compile_time_param.h"
+#include "biodynamo/core/container/transactional_vector.h"
 #include "unit/test_util.h"
 
 namespace bdm {

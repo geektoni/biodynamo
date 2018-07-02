@@ -15,17 +15,17 @@
 #ifndef UNIT_RESOURCE_MANAGER_TEST_H_
 #define UNIT_RESOURCE_MANAGER_TEST_H_
 
-#include "resource_manager.h"
+#include "biodynamo/core/simulation/resource_manager.h"
 
 #include <vector>
-#include "backend.h"
+#include "biodynamo/core/backend.h"
 #include "gtest/gtest.h"
-#include "io_util.h"
-#include "simulation_object_util.h"
-#include "type_util.h"
+#include "biodynamo/core/util/io_util.h"
+#include "biodynamo/core/simulation_object_util.h"
+#include "biodynamo/core/util/type_util.h"
 #include "unit/default_ctparam.h"
 #include "unit/test_util.h"
-#include "variadic_template_parameter_util.h"
+#include "biodynamo/core/util/variadic_template_parameter_util.h"
 
 #define ROOTFILE "bdmFile.root"
 

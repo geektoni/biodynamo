@@ -15,8 +15,8 @@
 #ifndef UNIT_BIOLOGY_MODULE_UTIL_TEST_H_
 #define UNIT_BIOLOGY_MODULE_UTIL_TEST_H_
 
-#include "biology_module_util.h"
-#include "cell.h"
+#include "biodynamo/core/biology_module_util.h"
+#include "biodynamo/core/simulation/cell.h"
 #include "gtest/gtest.h"
 
 namespace bdm {

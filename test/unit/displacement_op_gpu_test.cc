@@ -12,13 +12,13 @@
 //
 // -----------------------------------------------------------------------------
 
-#include "biology_module/grow_divide.h"
-#include "cell.h"
-#include "displacement_op.h"
-#include "gpu/gpu_helper.h"
-#include "grid.h"
+#include "biodynamo/core/simulation/biology_module/grow_divide.h"
+#include "biodynamo/core/simulation/cell.h"
+#include "biodynamo/core/simulation/operation/displacement_op.h"
+#include "biodynamo/core/gpu/gpu_helper.h"
+#include "biodynamo/core/simulation/grid.h"
 #include "gtest/gtest.h"
-#include "simulation_implementation.h"
+#include "biodynamo/core/simulation_implementation.h"
 #include "unit/default_ctparam.h"
 #include "unit/test_util.h"
 

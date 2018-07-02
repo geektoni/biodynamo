@@ -12,8 +12,8 @@
 //
 // -----------------------------------------------------------------------------
 
-#include "math_util.h"
-#include "backend.h"
+#include "biodynamo/core/util/math_util.h"
+#include "biodynamo/core/backend.h"
 #include "gtest/gtest.h"
 #include "unit/test_util.h"
 

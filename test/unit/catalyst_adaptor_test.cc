@@ -12,10 +12,10 @@
 //
 // -----------------------------------------------------------------------------
 
-#include "visualization/catalyst_adaptor.h"
+#include "biodynamo/core/visualization/catalyst_adaptor.h"
 #include <gtest/gtest.h>
-#include "io_util.h"
-#include "simulation_implementation.h"
+#include "biodynamo/core/util/io_util.h"
+#include "biodynamo/core/simulation_implementation.h"
 #include "unit/default_ctparam.h"
 #include "unit/test_util.h"
 

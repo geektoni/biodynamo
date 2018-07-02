@@ -215,7 +215,7 @@ function(build_paraview_plugin)
 
   add_custom_target(paraview-plugin
     ALL
-    COMMAND cmake ../../paraview_plugin/bdm_glyph && cmake --build . --target all
+    COMMAND cmake ../../src/paraview_plugin/bdm_glyph && cmake --build . --target all
     WORKING_DIRECTORY ${PV_PLUGIN_BINDIR}
     COMMENT "Build bdm paraview plugin")
 

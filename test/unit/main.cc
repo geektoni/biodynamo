@@ -13,9 +13,9 @@
 // -----------------------------------------------------------------------------
 
 #include <iostream>
-#include "backend.h"
+#include "biodynamo/core/backend.h"
 #include "gtest/gtest.h"
-#include "param.h"
+#include "biodynamo/core/simulation/param.h"
 
 int main(int argc, char **argv) {
   ::testing::InitGoogleTest(&argc, argv);

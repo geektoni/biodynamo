@@ -12,7 +12,7 @@
 //
 // -----------------------------------------------------------------------------
 
-#include "string_util.h"
+#include "biodynamo/core/util/string_util.h"
 #include <gtest/gtest.h>
 
 namespace bdm {

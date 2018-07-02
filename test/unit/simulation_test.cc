@@ -15,7 +15,7 @@
 #include <gtest/gtest.h>
 #include <omp.h>
 #include <fstream>
-#include "simulation_implementation.h"
+#include "biodynamo/core/simulation_implementation.h"
 
 #include "unit/default_ctparam.h"
 #include "unit/io_test.h"

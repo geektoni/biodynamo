@@ -16,9 +16,9 @@
 #define UNIT_IO_TEST_H_
 
 #include <gtest/gtest.h>
-#include "io_util.h"
-#include "param.h"
-#include "simulation.h"
+#include "biodynamo/core/util/io_util.h"
+#include "biodynamo/core/simulation/param.h"
+#include "biodynamo/core/simulation/simulation.h"
 #include "unit/test_util.h"
 
 namespace bdm {

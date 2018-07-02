@@ -14,7 +14,7 @@
 
 #include "unit/biology_module_op_test.h"
 #include "gtest/gtest.h"
-#include "simulation_implementation.h"
+#include "biodynamo/core/simulation_implementation.h"
 
 namespace bdm {
 namespace biology_module_op_test_internal {

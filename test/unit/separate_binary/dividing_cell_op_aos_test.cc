@@ -12,8 +12,8 @@
 //
 // -----------------------------------------------------------------------------
 
-#include "compile_time_param.h"
-#include "simulation_implementation.h"
+#include "biodynamo/core/simulation/compile_time_param.h"
+#include "biodynamo/core/simulation_implementation.h"
 #include "unit/dividing_cell_op_test.h"
 
 namespace bdm {
