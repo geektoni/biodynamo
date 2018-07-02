@@ -21,7 +21,7 @@
 #include <type_traits>
 
 #include "biodynamo/core/backend.h"
-#include "simulation.h"
+#include "biodynamo/core/simulation/simulation.h"
 #include "biodynamo/core/simulation_backup.h"
 
 namespace bdm {

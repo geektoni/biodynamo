@@ -47,7 +47,7 @@ set -e -x
 cd ~
 biodynamo new test-sim --no-github
 cd test-sim
-biodynamo run &>all
+biodynamo run 2>&1 | tee all
 
 # extract ouput
 cat all | tail -n3 | head -n1 >actual
