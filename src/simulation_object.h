@@ -30,11 +30,35 @@
 
 namespace bdm {
 
+struct SimulationObjectDataStorage {
+  static std::vector<uint32_t> box_idx_;
+  static std::vector<uint32_t> element_idx_;
+  static std::vector<std::vector<BaseBiologyModule*>> biology_modules_;
+};
+
+struct SimulationObjectData {
+  uint64_t idx;
+
+  SimulationObjectData() {
+    idx = SimulationObjectDataStorage::box_idx_.size();
+    SimulationObjectDataStorage::box_idx_.push_back(0);
+    SimulationObjectDataStorage::element_idx_.push_back(0);
+    SimulationObjectDataStorage::biology_modules_.push_back(std::vector<BaseBiologyModule*>());
+  }
+
+  uint32_t& box_idx_() { return SimulationObjectDataStorage::box_idx_[idx]; }
+  uint32_t& element_idx_() { return SimulationObjectDataStorage::element_idx_[idx]; }
+  std::vector<BaseBiologyModule*>& biology_modules_() { return SimulationObjectDataStorage::biology_modules_[idx]; }
+
+  uint32_t box_idx_() const { return SimulationObjectDataStorage::box_idx_[idx]; }
+  uint32_t element_idx_() const { return SimulationObjectDataStorage::element_idx_[idx]; }
+  const std::vector<BaseBiologyModule*>& biology_modules_() const { return SimulationObjectDataStorage::biology_modules_[idx]; }
+};
+
 /// Contains code required by all simulation objects
 class SimulationObject {
  public:
   SimulationObject() {}
-  SimulationObject(const SimulationObject &) = default;
   virtual ~SimulationObject() {}
 
   // TODO used to "fall down" to most derived type
@@ -45,12 +69,12 @@ class SimulationObject {
 
   /// NB: Cannot be used in the Constructur, because the ResourceManager`
   /// didn't initialize `element_idx_` yet.
-  uint32_t GetElementIdx() const { return element_idx_; }
+  uint32_t GetElementIdx() const { return so_d.element_idx_(); }
 
-  uint64_t GetSoHandle() const { return element_idx_; }
+  uint64_t GetSoHandle() const { return so_d.element_idx_(); }
 
   // assign the array index of this object in the ResourceManager
-  void SetElementIdx(uint32_t element_idx) { element_idx_ = element_idx; }
+  void SetElementIdx(uint32_t element_idx) { so_d.element_idx_() = element_idx; }
 
   /// Empty default implementation to update references of simulation objects
   /// that changed its memory position.
@@ -83,20 +107,20 @@ class SimulationObject {
   virtual std::array<double, 3> CalculateDisplacement(double squared_radius) const = 0;
   virtual void ApplyDisplacement(const std::array<double, 3>& displacement) = 0;
 
-  uint32_t GetBoxIdx() const { return box_idx_; }
+  uint32_t GetBoxIdx() const { return so_d.box_idx_(); }
 
-  void SetBoxIdx(uint32_t idx) { box_idx_ = idx; }
+  void SetBoxIdx(uint32_t idx) { so_d.box_idx_() = idx; }
 
   /// Add a biology module to this cell
   /// @tparam TBiologyModule type of the biology module. Must be in the set of
   ///         types specified in `BiologyModules`
   void AddBiologyModule(BaseBiologyModule* module) {
-    biology_modules_.push_back(module);
+    so_d.biology_modules_().push_back(module);
   }
 
   /// Execute all biology modules
   void RunBiologyModules() {
-    for(auto* bm : biology_modules_) {
+    for(auto* bm : so_d.biology_modules_()) {
       bm->Run(this);
     }
   }
@@ -106,13 +130,15 @@ class SimulationObject {
   /// @tparam TBiologyModule  type of the biology module
   // std::vector<BaseBiologyModule*> GetBiologyModules()
 
-  /// Grid box index
-  uint32_t box_idx_;
+  SimulationObjectData so_d;
 
-  protected:
-   // array index of this object in the ResourceManager
-   uint32_t element_idx_ = 0;
-   std::vector<BaseBiologyModule*> biology_modules_;
+  // /// Grid box index
+  // uint32_t box_idx_;
+  //
+  // protected:
+  //  // array index of this object in the ResourceManager
+  //  uint32_t element_idx_ = 0;
+  //  std::vector<BaseBiologyModule*> biology_modules_;
 
   //  ClassDef(SimulationObject, 1);
 };

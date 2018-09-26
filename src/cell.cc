@@ -19,6 +19,17 @@
 
 namespace bdm {
 
+   std::vector<uint32_t> SimulationObjectDataStorage::box_idx_;
+   std::vector<uint32_t> SimulationObjectDataStorage::element_idx_;
+   std::vector<std::vector<BaseBiologyModule*>> SimulationObjectDataStorage::biology_modules_;
+
+  std::vector<std::array<double, 3>> CellDataStorage::position_;
+  std::vector<std::array<double, 3>> CellDataStorage::tractor_force_;
+  std::vector<double> CellDataStorage::diameter_;
+  std::vector<double> CellDataStorage::volume_;
+  std::vector<double> CellDataStorage::adherence_;
+  std::vector<double> CellDataStorage::density_;
+
 constexpr std::array<double, 3> Cell::kXAxis;
 constexpr std::array<double, 3> Cell::kYAxis;
 constexpr std::array<double, 3> Cell::kZAxis;
@@ -81,7 +92,7 @@ std::array<double, 3> Cell::CalculateDisplacement(double squared_radius) const {
 
   auto* grid = Simulation::GetActive()->GetGrid();
   grid->ForEachNeighborWithinRadius(calculate_neighbor_forces, *this,
-                                    SoHandle(element_idx_), squared_radius);
+                                    SoHandle(so_d.element_idx_()), squared_radius);
 
   // 4) PhysicalBonds
   // How the physics influences the next displacement
@@ -128,7 +139,7 @@ void Cell::ApplyDisplacement(
 
 std::array<double, 3> Cell::
     TransformCoordinatesGlobalToPolar(const std::array<double, 3>& pos) const {
-  auto vector_to_point = Math::Subtract(pos, position_);
+  auto vector_to_point = Math::Subtract(pos, d.position_());
   std::array<double, 3> local_cartesian{Math::Dot(kXAxis, vector_to_point),
                                         Math::Dot(kYAxis, vector_to_point),
                                         Math::Dot(kZAxis, vector_to_point)};

@@ -37,6 +37,47 @@
 
 namespace bdm {
 
+struct CellDataStorage {
+  static std::vector<std::array<double, 3>> position_;
+  static std::vector<std::array<double, 3>> tractor_force_;
+  static std::vector<double> diameter_;
+  static std::vector<double> volume_;
+  static std::vector<double> adherence_;
+  static std::vector<double> density_;
+};
+
+struct CellData {
+  uint64_t idx;
+
+  CellData() {
+    idx = CellDataStorage::position_.size();
+    CellDataStorage::position_.push_back({0, 0, 0});
+    CellDataStorage::tractor_force_.push_back({0, 0, 0});
+    CellDataStorage::diameter_.push_back(0);
+    CellDataStorage::volume_.push_back(0);
+    CellDataStorage::adherence_.push_back(0);
+    CellDataStorage::density_.push_back(0);
+  }
+
+  auto& position_() { return CellDataStorage::position_[idx]; }
+  const auto& position_() const  { return CellDataStorage::position_[idx]; }
+
+  auto& tractor_force_() { return CellDataStorage::tractor_force_[idx]; }
+  const auto& tractor_force_() const  { return CellDataStorage::tractor_force_[idx]; }
+
+  double& diameter_() { return CellDataStorage::diameter_[idx]; }
+  double diameter_() const  { return CellDataStorage::diameter_[idx]; }
+
+  double& volume_() { return CellDataStorage::volume_[idx]; }
+  double volume_() const  { return CellDataStorage::volume_[idx]; }
+
+  double& adherence_() { return CellDataStorage::adherence_[idx]; }
+  double adherence_() const  { return CellDataStorage::adherence_[idx]; }
+
+  double& density_() { return CellDataStorage::density_[idx]; }
+  double density_() const  { return CellDataStorage::density_[idx]; }
+};
+
 class Cell : public SimulationObject {
   // BDM_SIM_OBJECT_HEADER(Cell, 1, biology_modules_, position_, tractor_force_,
   //                       diameter_, volume_, adherence_, density_, box_idx_);
@@ -57,12 +98,13 @@ class Cell : public SimulationObject {
 
   static constexpr Shape GetShape() { return Shape::kSphere; }
 
-  Cell() : density_(1.0) {}
-  explicit Cell(double diameter) : diameter_(diameter), density_(1.0) {
-    UpdateVolume();
+  Cell() {
+    d.density_() = 1.0;
   }
-  explicit Cell(const std::array<double, 3>& position)
-      : position_(position), density_{1.0} {}
+  explicit Cell(const std::array<double, 3>& position){
+    d.position_() = position;
+        d.density_() = 1.0;
+      }
 
   /// This constructor is used to create daughter 2 for a cell division event
   /// \see CellDivisionEvent
@@ -112,9 +154,9 @@ class Cell : public SimulationObject {
     daughter->SetPosition(new_position);
 
     // // biology modules
-    auto& mother_bms = mother->biology_modules_;
+    auto& mother_bms = mother->so_d.biology_modules_();
     // // copy biology_modules_ to me
-    auto& my_bms = biology_modules_;
+    auto& my_bms = so_d.biology_modules_();
     CopyBiologyModules(event, &mother_bms, &my_bms);
 
     // E) This sphere becomes the 1st daughter
@@ -153,8 +195,8 @@ class Cell : public SimulationObject {
   void EventHandler(const Event& event, SimulationObject* daughter_2) override {
     // call event handler for biology modules
     if (dynamic_cast<const CellDivisionEvent*>(&event)) {
-      auto* daughter_bms = &(dynamic_cast<Cell*>(daughter_2)->biology_modules_);
-      BiologyModuleEventHandler(event, &(biology_modules_), daughter_bms);
+      auto* daughter_bms = &(dynamic_cast<Cell*>(daughter_2)->so_d.biology_modules_());
+      BiologyModuleEventHandler(event, &(so_d.biology_modules_()), daughter_bms);
     } else {
       Fatal("Cell", "Cell only supports CellDivisionEvent.");
     }
@@ -190,7 +232,7 @@ class Cell : public SimulationObject {
   Cell* Divide(const std::array<double, 3>& axis) {
     auto* random = Simulation::GetActive()->GetRandom();
     auto polarcoord =
-        TransformCoordinatesGlobalToPolar(Math::Add(axis, position_));
+        TransformCoordinatesGlobalToPolar(Math::Add(axis, d.position_()));
     return Divide(random->Uniform(0.9, 1.1), polarcoord[1],
                             polarcoord[2]);
   }
@@ -201,7 +243,7 @@ class Cell : public SimulationObject {
   Cell* Divide(double volume_ratio,
                           const std::array<double, 3>& axis) {
     auto polarcoord =
-        TransformCoordinatesGlobalToPolar(Math::Add(axis, position_));
+        TransformCoordinatesGlobalToPolar(Math::Add(axis, d.position_()));
     return Divide(volume_ratio, polarcoord[1], polarcoord[2]);
   }
 
@@ -217,71 +259,71 @@ class Cell : public SimulationObject {
     return daughter;
   }
 
-  double GetAdherence() const { return adherence_; }
+  double GetAdherence() const { return d.adherence_(); }
 
-  double GetDiameter() const override { return diameter_; }
+  double GetDiameter() const override { return d.diameter_(); }
 
-  double GetMass() const { return density_ * volume_; }
+  double GetMass() const { return d.density_() * d.volume_(); }
 
-  double GetDensity() const { return density_; }
+  double GetDensity() const { return d.density_(); }
 
-  const std::array<double, 3>& GetPosition() const override { return position_; }
+  const std::array<double, 3>& GetPosition() const override { return d.position_(); }
 
   const std::array<double, 3>& GetTractorForce() const {
-    return tractor_force_;
+    return d.tractor_force_();
   }
 
-  double GetVolume() const { return volume_; }
+  double GetVolume() const { return d.volume_(); }
 
-  void SetAdherence(double adherence) { adherence_ = adherence; }
+  void SetAdherence(double adherence) { d.adherence_() = adherence; }
 
   void SetDiameter(double diameter) {
-    diameter_ = diameter;
+    d.diameter_() = diameter;
     UpdateVolume();
   }
 
   void SetVolume(double volume) {
-    volume_ = volume;
+    d.volume_() = volume;
     UpdateDiameter();
   }
 
-  void SetMass(double mass) { density_ = mass / volume_; }
+  void SetMass(double mass) { d.density_() = mass / d.volume_(); }
 
-  void SetDensity(double density) { density_ = density; }
+  void SetDensity(double density) { d.density_() = density; }
 
   void SetPosition(const std::array<double, 3>& position) override {
-    position_ = position;
+    d.position_() = position;
   }
 
   void SetTractorForce(const std::array<double, 3>& tractor_force) {
-    tractor_force_ = tractor_force;
+    d.tractor_force_() = tractor_force;
   }
 
   void ChangeVolume(double speed) {
     // scaling for integration step
     auto* param = Simulation::GetActive()->GetParam();
     double delta = speed * param->simulation_time_step_;
-    volume_ += delta;
-    if (volume_ < 5.2359877E-7) {
-      volume_ = 5.2359877E-7;
+    d.volume_() += delta;
+    if (d.volume_() < 5.2359877E-7) {
+      d.volume_() = 5.2359877E-7;
     }
     UpdateDiameter();
   }
 
   void UpdateDiameter() {
     // V = (4/3)*pi*r^3 = (pi/6)*diameter^3
-    diameter_ = std::cbrt(volume_ * 6 / Math::kPi);
+    d.diameter_() = std::cbrt(d.volume_() * 6 / Math::kPi);
   }
 
   void UpdateVolume() {
     // V = (4/3)*pi*r^3 = (pi/6)*diameter^3
-    volume_ = Math::kPi / 6 * std::pow(diameter_, 3);
+    d.volume_() = Math::kPi / 6 * std::pow(d.diameter_(), 3);
   }
 
   void UpdatePosition(const std::array<double, 3>& delta) {
-    position_[0] += delta[0];
-    position_[1] += delta[1];
-    position_[2] += delta[2];
+    d.position_()[0] += delta[0];
+    d.position_()[1] += delta[1];
+    d.position_()[2] += delta[2];
   }
 
   std::array<double, 3> CalculateDisplacement(double squared_radius) const override;
@@ -302,15 +344,13 @@ class Cell : public SimulationObject {
   std::array<double, 3> TransformCoordinatesGlobalToPolar(
       const std::array<double, 3>& coord) const;
 
-  std::array<double, 3> position_;
-  std::array<double, 3> tractor_force_;
-  double diameter_;
-  double volume_;
-  double adherence_;
-  double density_;
-
-  /// Grid box index
-  uint32_t box_idx_;
+  CellData d;
+  // std::array<double, 3> position_;
+  // std::array<double, 3> tractor_force_;
+  // double diameter_;
+  // double volume_;
+  // double adherence_;
+  // double density_;
 };
 
 }  // namespace bdm
