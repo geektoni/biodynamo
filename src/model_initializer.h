@@ -23,10 +23,21 @@
 #include "random.h"
 #include "resource_manager.h"
 #include "simulation.h"
+#include "../third_party/libmorton/morton.h"
 
 namespace bdm {
 
 struct ModelInitializer {
+
+  struct Foo {
+    Foo(std::array<double, 3>&& pos) :pos_(pos) {
+      morton_ = libmorton::morton3D_64_encode((uint32_t) pos_[0], (uint32_t) pos_[1], (uint32_t) pos_[2]);
+    }
+    std::array<double, 3> pos_;
+    int morton_ = 0;
+    bool operator<(const Foo& other) const {  return morton_ < other.morton_; }
+  };
+
   /// Creates a 3D cubic grid of simulation objects and adds them to the
   /// ResourceManager. Type of the simulation object is determined by the return
   /// type of parameter cell_builder.
@@ -49,15 +60,26 @@ struct ModelInitializer {
     auto* sim = Simulation::GetActive();
     auto* rm = sim->GetResourceManager();
 
+    std::vector<Foo> foos;
+    foos.reserve(cells_per_dim * cells_per_dim * cells_per_dim);
+
     for (size_t x = 0; x < cells_per_dim; x++) {
       auto x_pos = x * space;
       for (size_t y = 0; y < cells_per_dim; y++) {
         auto y_pos = y * space;
         for (size_t z = 0; z < cells_per_dim; z++) {
-          auto* new_simulation_object = cell_builder({x_pos, y_pos, z * space});
-          rm->push_back(new_simulation_object);
+          // auto* new_simulation_object = cell_builder({x_pos, y_pos, z * space});
+          // rm->push_back(new_simulation_object);
+          foos.push_back(Foo({x_pos, y_pos, z * space}));
         }
       }
+    }
+    // std::sort(foos.begin(), foos.end());
+    // std::random_shuffle(foos.begin(), foos.end());
+    for(auto& foo : foos) {
+      // std::cout << foo.pos_[0] << " " << foo.pos_[1] << " " << foo.pos_[2] << std::endl;
+      auto* new_simulation_object = cell_builder(foo.pos_);
+      rm->push_back(new_simulation_object);
     }
   }
 
