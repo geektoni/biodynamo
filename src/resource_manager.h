@@ -309,7 +309,7 @@ class ResourceManager {
       ::bdm::Apply(&data_, i, [&](auto* container) {
 #pragma omp parallel for
         for (size_t e = 0; e < container->size(); e++) {
-          function((*container)[e], SoHandle(i, e));
+          function((*container)[e]);
         }
       });
     }

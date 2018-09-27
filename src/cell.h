@@ -299,9 +299,7 @@ BDM_SIM_OBJECT(Cell, bdm::SimulationObject) {
     position_[kIdx][2] += delta[2];
   }
 
-  template <typename TGrid>
-  std::array<double, 3> CalculateDisplacement(TGrid * grid,
-                                              double squared_radius);
+  std::array<double, 3> CalculateDisplacement(double squared_radius);
 
   void ApplyDisplacement(const std::array<double, 3>& displacement);
 
@@ -367,9 +365,8 @@ BDM_SO_DEFINE(inline void CellExt)::RunBiologyModules() {
   }
 }
 
-BDM_SO_DEFINE(template <typename TGrid> inline std::array<double, 3>
-                  CellExt)::CalculateDisplacement(TGrid* grid,
-                                                  double squared_radius) {
+BDM_SO_DEFINE(inline std::array<double, 3>
+                  CellExt)::CalculateDisplacement(double squared_radius) {
   // Basically, the idea is to make the sum of all the forces acting
   // on the Point mass. It is stored in translationForceOnPointMass.
   // There is also a computation of the torque (only applied
@@ -425,6 +422,7 @@ BDM_SO_DEFINE(template <typename TGrid> inline std::array<double, 3>
     translation_force_on_point_mass[2] += neighbor_force[2];
   };
 
+  auto* grid = Simulation_t::GetActive()->GetGrid();
   grid->ForEachNeighborWithinRadius(calculate_neighbor_forces, *this,
                                     GetSoHandle(), squared_radius);
 

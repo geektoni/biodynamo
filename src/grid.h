@@ -310,11 +310,11 @@ class Grid {
 
     // Assign simulation objects to boxes
     auto* rm = TSimulation::GetActive()->GetResourceManager();
-    rm->ApplyOnAllElementsParallel([this](auto&& sim_object, SoHandle id) {
+    rm->ApplyOnAllElementsParallel([this](auto&& sim_object) {
       const auto& position = sim_object.GetPosition();
       auto idx = this->GetBoxIndex(position);
       auto box = this->GetBoxPointer(idx);
-      box->AddObject(id, &successors_);
+      box->AddObject(sim_object.GetSoHandle(), &successors_);
       sim_object.SetBoxIdx(idx);
     });
   }

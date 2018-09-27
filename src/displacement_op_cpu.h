@@ -32,39 +32,25 @@ class DisplacementOpCpu {
   DisplacementOpCpu() {}
   ~DisplacementOpCpu() {}
 
-  template <typename TContainer>
-  void operator()(TContainer* sim_objects, uint16_t type_idx) const {
-    std::vector<std::array<double, 3>> sim_object_movements;
-    sim_object_movements.reserve(sim_objects->size());
-
-    auto* sim = TSimulation::GetActive();
-    auto* grid = sim->GetGrid();
-
+  void Init() {
+    // sim_object_movements.reserve(sim_objects->size());
+    auto* grid = TSimulation::GetActive()->GetGrid();
     auto search_radius = grid->GetLargestObjectSize();
-    double squared_radius = search_radius * search_radius;
+    squared_radius = search_radius * search_radius;
+  }
 
-#pragma omp parallel for shared(grid) firstprivate(squared_radius)
-    for (size_t i = 0; i < sim_objects->size(); i++) {
-      sim_object_movements[i] =
-          (*sim_objects)[i].CalculateDisplacement(grid, squared_radius);
-    }
+  // std::vector<std::array<double, 3>> sim_object_movements;
+  double squared_radius;
 
-    // Set new positions after all updates have been calculated
-    // otherwise some sim_objects would see neighbors with already updated
-    // positions
-    // which would lead to inconsistencies
-    // FIXME there are still inconsistencies if there are more than one
-    // simulation
-    //  object types!
-    auto* param = sim->GetParam();
-#pragma omp parallel for
-    for (size_t i = 0; i < sim_objects->size(); i++) {
-      auto&& sim_object = (*sim_objects)[i];
-      sim_object.ApplyDisplacement(sim_object_movements[i]);
-      if (param->bound_space_) {
-        ApplyBoundingBox(&sim_object, param->min_bound_, param->max_bound_);
-        grid->SetDimensionThresholds(param->min_bound_, param->max_bound_);
-      }
+  template <typename TSimObject>
+  void operator()(TSimObject&& sim_object) const {
+    const auto& displacement = sim_object.CalculateDisplacement(squared_radius);
+    // FIXME changes applied directly
+    sim_object.ApplyDisplacement(displacement);
+    auto* param = TSimulation::GetActive()->GetParam();
+    if (param->bound_space_) {
+      ApplyBoundingBox(&sim_object, param->min_bound_, param->max_bound_);
+      // grid->SetDimensionThresholds(param->min_bound_, param->max_bound_); FIXME
     }
   }
 };

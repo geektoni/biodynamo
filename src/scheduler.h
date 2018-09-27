@@ -101,17 +101,33 @@ class Scheduler {
         grid->UpdateGrid();
       }
     }
-    // TODO(ahmad): should we only do it here and not after we run the physics?
-    // We need it here, because we need to update the threshold values before
-    // we update the diffusion grid
-    if (param->bound_space_) {
-      rm->ApplyOnAllTypes(bound_space_);
-    }
-    rm->ApplyOnAllTypes(diffusion_);
-    rm->ApplyOnAllTypes(biology_);
-    if (param->run_mechanical_interactions_) {
-      rm->ApplyOnAllTypes(physics_);  // Bounding box applied at the end
-    }
+    // // TODO(ahmad): should we oy do it here and not after we run the physics?
+    // // We need it here, because we need to update the threshold values before
+    // // we update the diffusion grid
+    // if (param->bound_space_) {
+    //   rm->ApplyOnAllTypes(bound_space_);
+    // }
+    // rm->ApplyOnAllTypes(diffusion_);
+    // rm->ApplyOnAllTypes(biology_);
+    // if (param->run_mechanical_interactions_) {
+    //   rm->ApplyOnAllTypes(physics_);  // Bounding box applied at the end
+    // }
+    auto run = [&](auto&& so){
+      // TODO(ahmad): should we only do it here and not after we run the physics?
+      // We need it here, because we need to update the threshold values before
+      // we update the diffusion grid
+      if (param->bound_space_) {
+        bound_space_(so);
+      }
+      biology_(so);
+      if (param->run_mechanical_interactions_) {
+        physics_(so);  // Bounding box applied at the end
+      }
+    };
+    Timing timing("all", &gStatistics);
+    diffusion_();
+    physics_.Init();
+    rm->ApplyOnAllElementsParallel(run);
     CommitChangesAndUpdateReferences();
   }
 
@@ -122,12 +138,16 @@ class Scheduler {
   CatalystAdaptor<>* visualization_ = nullptr;  //!
   bool is_gpu_environment_initialized_ = false;
 
+  DiffusionOp diffusion_;
+  BiologyModuleOp biology_;
+  DisplacementOpCpu<TSimulation> physics_;
+  BoundSpace bound_space_;
   OpTimer<CommitOp> commit_ = OpTimer<CommitOp>("commit");
-  OpTimer<DiffusionOp> diffusion_ = OpTimer<DiffusionOp>("diffusion");
-  OpTimer<BiologyModuleOp> biology_ = OpTimer<BiologyModuleOp>("biology");
-  OpTimer<DisplacementOp<TSimulation>> physics_ =
-      OpTimer<DisplacementOp<TSimulation>>("physics");
-  OpTimer<BoundSpace> bound_space_ = OpTimer<BoundSpace>("bound_space");
+  // OpTimer<DiffusionOp> diffusion_ = OpTimer<DiffusionOp>("diffusion");
+  // OpTimer<BiologyModuleOp> biology_ = OpTimer<BiologyModuleOp>("biology");
+  // OpTimer<DisplacementOp<TSimulation>> physics_ =
+  //     OpTimer<DisplacementOp<TSimulation>>("physics");
+  // OpTimer<BoundSpace> bound_space_ = OpTimer<BoundSpace>("bound_space");
 
   /// Backup the simulation. Backup interval based on `Param::backup_interval_`
   void Backup() {
@@ -196,7 +216,7 @@ class Scheduler {
 
     grid->Initialize();
     if (param->bound_space_) {
-      rm->ApplyOnAllTypes(bound_space_);
+      rm->ApplyOnAllElementsParallel(bound_space_);
     }
     int lbound = grid->GetDimensionThresholds()[0];
     int rbound = grid->GetDimensionThresholds()[1];

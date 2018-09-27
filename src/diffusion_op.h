@@ -34,8 +34,8 @@ class DiffusionOp {
   DiffusionOp() {}
   virtual ~DiffusionOp() {}
 
-  template <typename TContainer, typename TSimulation = Simulation<>>
-  void operator()(TContainer* cells, uint16_t type_idx) {
+  template <typename TSimulation = Simulation<>>
+  void operator()() {
     auto* sim = TSimulation::GetActive();
     auto* grid = sim->GetGrid();
     auto* param = sim->GetParam();
