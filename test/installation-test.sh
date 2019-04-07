@@ -51,5 +51,5 @@ test/system-test.sh
 cd ~
 biodynamo new test-sim
 run_cmake_simulation test-sim
-
+pkill -f "/usr/bin/Xvfb :99 -ac -screen 0 1024x768x24" || true
 exit $?
