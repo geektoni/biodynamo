@@ -18,7 +18,7 @@ case "$1" in
     echo -n "Stopping virtual X frame buffer: Xvfb"
     if [ `lsb_release -si` != "CentOS" ]; then
       /sbin/start-stop-daemon --stop --quiet --pidfile $PIDFILE
-    elif [ "$(ps -ef | grep "$XVFB $XVFBARGS" | wc -l)" != "2" ]; then
+    elif [ "$(ps -ef | grep "$XVFB $XVFBARGS" | wc -l)" == "2" ]; then
       pkill -f "$XVFB $XVFBARGS"
     fi
     rm -f $PIDFILE
