@@ -52,7 +52,8 @@ cd ~
 biodynamo new test-sim
 run_cmake_simulation test-sim
 RET_VAL=$?
-
+``
 $BDM_PROJECT_DIR/util/xvfb-initd.sh stop
+ps -ef
 
 exit $RET_VAL
