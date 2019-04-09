@@ -30,6 +30,7 @@ fi
 set -e -x
 
 PV_VERSION=$1
+shift
 BDM_PROJECT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/../.."
 cd $BDM_PROJECT_DIR
 
@@ -45,11 +46,10 @@ WORKING_DIR=~/bdm-build-third-party
 mkdir -p $WORKING_DIR
 cd $WORKING_DIR
 
-# Install prerequisites
-. $BDM_PROJECT_DIR/util/build-third-party/third-party-prerequisites.sh
-
+# Install prerequisites will be called inside build-qt.sh
 ## Install Qt using the silent JavaScript installer
-$BDM_PROJECT_DIR/util/build-third-party/build-qt.sh
+. $BDM_PROJECT_DIR/util/build-third-party/build-qt.sh
+cd $WORKING_DIR
 
 if [ `uname` = "Linux" ]; then
   QT_CMAKE_DIR=$WORKING_DIR/qt/5.11.0/gcc_64/lib/cmake
@@ -96,13 +96,20 @@ if [ `uname` = "Darwin" ]; then
                      -DCMAKE_INSTALL_RPATH:STRING=@loader_path/../../qt/lib;@loader_path/../../../../../qt/lib;@loader_path/../lib'
 fi
 
-
+# for release build options have a look at:
+# https://gitlab.kitware.com/paraview/paraview-superbuild/blob/master/projects/paraview.cmake
 Qt5_DIR=$QT_CMAKE_DIR cmake \
   -DCMAKE_INSTALL_PREFIX="../paraview-install" \
   -DCMAKE_BUILD_TYPE:STRING="Release" \
   -DPARAVIEW_ENABLE_PYTHON:BOOL=ON \
-  -DPARAVIEW_ENABLE_MPI:BOOL=OFF \
   -DPARAVIEW_INSTALL_DEVELOPMENT_FILES:BOOL=ON \
+  -DPARAVIEW_USE_MPI:BOOL=:BOOL=ON \
+  -DMPI_C_LIBRARIES=$MPI_LIBRARY \
+  -DMPI_CXX_LIBRARIES=$MPI_LIBRARY \
+  -DMPI_C_INCLUDE_PATH=$MPI_INCLUDES \
+  -DMPI_CXX_INCLUDE_PATH=$MPI_INCLUDES \
+  -DPARAVIEW_USE_OSPRAY:BOOL=ON \
+  -DOSPRAY_INSTALL_DIR=/opt/ospray \
   $OSX_CMAKE_OPTIONS \
    ../paraview
 
